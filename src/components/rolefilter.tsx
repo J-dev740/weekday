@@ -21,9 +21,20 @@ import Chip from './chip';
   // const [category,setCategory]=useState<categ | null>(null);
   const [category,setCategory]=useState("");
   const [roles,setRoles]=useState({
-    Engineering:['frontEnd','backend','fullstack','android','ios','tech lead','trole1','trole2','trole3'],
-    Design:['ui/ux','design','apparels'],
-    Hr:['role1','role2','role3'],
+    Engineering:['frontEnd','backend','fullstack','android','flutter','react Native','Dev-Ops','Data Engineer','Data Science ','tech lead','ios','Computer Vision','NLP','Deep learning','Web3','Test/QA','SRE','Data-Infrastructure'],
+    Design:['Designer','Design Manager','Graphic Designer','Product Designer'],
+    Product:['Product Manager'],
+    Operations:['Operations Manager',`Founder's Office/Chief of Staff`,],
+    Sales:['Sales Development Representative','Account Executive','Account Manager'],
+    Marketing:['Digital Marketing Manager','Growth Hacker','Marketing','Product Marketing Manager'],
+    OtherEngineering:['HardWare','Mechanical','Systems'],
+    BusinessAnalyst:['Business Analyst'],
+    DataAnalyst:['Data Analyst'],
+    ProjectManager:['Project Manager'],
+    Management:['Management'],
+    Legal:['Legal'],
+    Hr:['Hr'],
+    Finance:['Finance']
   })
   // let category='';
   const [list,setList]=useState(false);

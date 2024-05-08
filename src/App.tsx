@@ -205,7 +205,7 @@ useEffect(()=>{
 
         </div>}
         {(!loaderactive && data.length==0)?
-        `no Data available`:``}
+        `no Jobs available`:``}
       </div>
 
     </div>
