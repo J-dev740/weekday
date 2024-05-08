@@ -24,7 +24,7 @@ function JobCard({job,index}:{
     animate="visible"
     transition={
         {
-            delay:index*0.03,
+            delay:index*0.0003,
             ease:"easeInOut",
             duration:0.5
         }
@@ -45,21 +45,22 @@ function JobCard({job,index}:{
             </div>
             {/* headers */}
             <div className='flex flex-col gap-y-[2px] items-start justify-center gap-[1px]  text-[12px] text-black  '>
-                <span className='text-[#8b8b8b] font-lex  text-[13px] font-semibold text-wrap leading-tight tracking-widest '> {job.companyName}</span>
+                <span className='text-[#8b8b8b] font-lex  text-[13px] font-semibold text-wrap leading-tight tracking-widest  hover:cursor-pointer hover:underline hover:underline-offset-4 '> {job.companyName}</span>
                 <span className='text-black font-lext text-[14px] font-light text-wrap text-start leading-tight tracking-wide'>{job.jobRole}</span>
                 <span className='text-black font-bold font-lex  text-[10px]  mt-[2px] leading-tight text-start text-wrap'>{job.location} | {job.minExp!==null && job.maxExp!==null?`Exp ${job.minExp}-${job.maxExp} years`:(job.minExp!==null || job.maxExp!==null)?`Exp ${(job.minExp || job.maxExp)} years`:`Exp not specified `}</span>
             </div>
         </div>
         {/* estimated salary */}
-        <div className='flex w-fit h-fit text-[14px] text-gray-600 font-lex font-semibold leading-tight flex-row items-center justify-start gap-x-1 my-[8px] tracking-normal '>Estimated Salary {job.salaryCurrencyCode=='USD'?`$`:`₹`}{job.minJdSalary!==null?String(job.minJdSalary):`__`}-{job.maxJdSalary!==null?String(job.maxJdSalary):'__'} {job.salaryCurrencyCode=='USD'?`K`:`LPA`} 
-        <span><FaSquareCheck  className='border-1 border-black text-green-600'/></span> </div>
+        <div className='flex  w-fit h-fit text-[14px] text-gray-600 font-lex font-semibold leading-tight flex-row items-center justify-start gap-x-1 my-[8px] tracking-normal '>Estimated Salary {job.salaryCurrencyCode=='USD'?`$`:`₹`}{job.minJdSalary!==null?String(job.minJdSalary):`__`}-{job.maxJdSalary!==null?String(job.maxJdSalary):'__'} {job.salaryCurrencyCode=='USD'?`K`:`LPA`} 
+        <span><FaSquareCheck  className=' flex border-1 border-black   text-green-600'/>
+        </span> </div>
         {/* about company */}
         <div className=' font-lex  relative flex w-full h-[200px]  overflow-hidden flex-col items-start justify-start p-1 text-[14px] '>
             <div className='font-semibold leading-tight'>About Company:</div>
             <div className='text-[12px] font-bold font-lex '>About us</div>
             <div className='flex h-fit w-full text-wrap text-start text-[10px] font-lex '>{job.jobDetailsFromCompany}</div>
-            <div className='absolute text-center   flex flex-row items-center justify-center w-full h-[50px] bg-gradient-to-t from-white  to-transparent -bottom-2  text-blue-600 '>
-                <span className='hover:cursor-pointer font-lex  font-medium'>view job</span>
+            <div className='absolute text-center   flex flex-row   items-center  justify-center w-full h-[50px] bg-gradient-to-t from-white  to-transparent -bottom-2  text-blue-400 '>
+                <span className='flex hover:cursor-pointer font-lex h-fit w-fit  self-end text-blue-600 font-medium'>view job</span>
                 </div>
         </div>
         {/* view job */}

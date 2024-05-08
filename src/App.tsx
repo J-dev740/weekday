@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import { IoIosArrowDown } from "react-icons/io";
-import { FaChevronDown } from "react-icons/fa";
-import { CgClose } from "react-icons/cg";
 import React from 'react';
-import Chip from './components/chip';
 import RoleFilter from './components/rolefilter';
-import { UseDispatch, useDispatch, useSelector, } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { listdata } from './assets/dummydata';
 import { updatefilters, clearAll } from './feature/filter.slice';
 import SearchFilter from './components/searchfilter';
@@ -43,22 +37,68 @@ interface IFilter {
   experience: Number
 }
 function App() {
-
+  const [data, setData] = useState<IJob[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [count,setCount]=useState(0);
+  const[limit,setLimit]=useState(10);
+  const[offset,setOffset]=useState(0);
   const { ref, inView } = useInView()
-  // for laz[y ] loading feature 
-  const [page, setPage] = useState(3)
+
+  const fetchData = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const body = JSON.stringify({
+        "limit":limit,
+        "offset":offset,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body
+      };
+      console.log('limit',limit,'offset',offset)
+      const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", requestOptions);
+      const result = await response.text();
+      const {jdList:jd,totalCount}=JSON.parse(result);
+      console.log('jd',jd)
+      setCount(totalCount);
+      const filteredData=jd.filter((job:IJob)=>shouldDisplay(job));
+      setData([...data,...filteredData]);
+      setLoading(false); // Set loading to false after data is loaded
+    } catch (error) {
+      console.error(error);
+      setLoading(false); // Set loading to false if an error occurs
+    }
+  };
+
+  const filters: IFilter = useSelector((state: any) => state.filter)
+
+  useEffect(() => {
+    // console.log('here')
+    if(inView && offset<=count+10){
+      fetchData();
+      console.log('data',data);
+      let nextoffset=offset+10;
+      console.log('nextoffset',nextoffset);
+      setOffset(nextoffset);
+    }
+   if(offset>count) setLoaderActive(false);
+  }, [inView,data]); // Empty dependency array to run only once on component mount
+useEffect(()=>{
+  // console.log(`------------------> filterupdated`)
+  // console.log('filterstate', filters);
+
+  setOffset(0);
+  setLoaderActive(true);
+  setData([]);
+},[filters])
+  // for laz[y] loading feature 
   // 
   // for setting loading when necessary 
   const [loaderactive, setLoaderActive] = useState(true);
-  useEffect(() => {
-    if (inView) {
-      let start = page;
-      setPage(page + 4);
-      if (page >= filteredData.length) setLoaderActive(false);
-    }
-  }, [inView])
-  const filters: IFilter = useSelector((state: any) => state.filter)
-  console.log('filterstate', filters);
   const shouldDisplay = (job: IJob) => {
 // roles filter
     let roles = filters.roles.length > 0 ? filters.roles.some((role: String) => role.toLowerCase() == job.jobRole.toLowerCase()) : true;
@@ -73,16 +113,17 @@ function App() {
     // experience filter
     let experience = true;
     if (filters.experience !== 0) {
-      if (!job.minExp && !job.maxExp) experience = false;
-      else if (!job.minExp && job.maxExp !== null) {
+      if (job.minExp==null && job.maxExp==null) experience = false;
+      else if (job.minExp==null && job.maxExp !== null) {
         if (filters.experience <= job.maxExp) experience = true;
         else experience = false;
       }
-      else if (!job.maxExp && job.minExp !== null) {
+      else if (job.maxExp==null && job.minExp !== null) {
         if (filters.experience >= job.minExp) experience = true;
         else experience = false;
-      } else if (job.minExp && job.maxExp) {
+      } else if (job.minExp!==null && job.maxExp!==null) {
         experience = (filters.experience >= job.minExp && filters.experience <= job.maxExp);
+        // if(experience==true) console.log(filters.experience,job.minExp,job.maxExp)
       }
     }
 
@@ -123,9 +164,9 @@ function App() {
 
   return (
     <div className="flex self-start flex-row items-start justify-start w-full   max-w-[2000px] min-h-screen   min-w-fit  h-full overflow-scroll  gap-[10px] p-3  bg-slate-200">
-      <div className='flex  h-fit flex-col flex-wrap items-start justify-start w-full  gap-6'>
+      <div className='flex  h-fit flex-col flex-wrap items-center justify-start w-full  gap-6'>
         {/* filter section */}
-        <div className='flex flex-row w-fit  h-fit min-h-fit max-h-fit  flex-wrap   items-center justify-start gap-2 md:gap-4'>
+        <div className='flex flex-row w-fit self-start  h-fit min-h-fit max-h-fit  flex-wrap   items-center justify-start gap-2 md:gap-4'>
           {/* filter 1 */}
           <RoleFilter onupdate={updaterole} />
           {/* filter 2 */}
@@ -140,14 +181,18 @@ function App() {
 
         </div>
         {/* job cards section */}
-        <div className=' grid min-[1080px]:grid-cols-3 min-[1280px]:grid-cols-4 md:grid-cols-2 self-start min-[1280px]:gap-x-6 gap-x-4 max-w-fit gap-y-4 w-full h-fit text-black '>
+        <div className=' grid px-3 min-[1080px]:grid-cols-3 min-[1080px]:gap-x-6  min-[1280px]:grid-cols-4 md:grid-cols-2  min-[1280px]:gap-x-6 gap-x-4 max-w-fit gap-y-4 w-full h-fit text-black '>
           {
-            filteredData.length > 0 ? filteredData.slice(0, page).map((job: IJob, idx: number) => (
+            data.length>0?
+            //  filteredData.map((job: IJob, idx: number) => (
+             data.map((job: IJob, idx: number) => (
+
               <JobCard
                 key={idx}
                 index={idx}
                 job={job} />
-            )) : ''
+            )) : (!loading && data.length==0)?``:null
+            // loading?<Loader/>:null
 
           }
 
@@ -159,6 +204,8 @@ function App() {
           <Loader />
 
         </div>}
+        {(!loaderactive && data.length==0)?
+        `no Data available`:``}
       </div>
 
     </div>

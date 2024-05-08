@@ -38,10 +38,13 @@ import Chip from './chip';
       }
    else  if(category===cat)
       { 
-        console.log('here')
-        setSelectedChips([...selectedChips,role])
-        console.log('selectedchips',selectedChips)
+        console.log('here',selectedChips)
+        let updatedlist=[...selectedChips];
+        updatedlist.push(role);
+        // setSelectedChips([...selectedChips,role])
+        setSelectedChips(updatedlist);
         console.log(category)
+        console.log('selectedchips',selectedChips)
       }
       else{
     // setCategory(cat);
@@ -67,7 +70,7 @@ import Chip from './chip';
     <div
     onBlur={()=>setList(false)}
 
-     className='flex flex-row   min-w-[150px] max-w-full w-fit  min-h-[38px] h-fit items-center   ring-[1px]  ring-[#8b8b8b] rounded-[4px]'>
+     className='flex flex-row focus-within:ring-2 focus-within:ring-blue-500   min-w-[150px] max-w-full w-fit  min-h-[38px] h-fit items-center   ring-[1px]  ring-[#8b8b8b] rounded-[4px]'>
     {/* roles section */}
     <div className=' relative flex flex-row min-w-[100px] h-fit w-fit max-w-full  rounded-md  gap-[1px]    '>
       {/* chipset and search section */}
