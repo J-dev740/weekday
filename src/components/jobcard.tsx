@@ -59,8 +59,8 @@ function JobCard({job,index}:{
             <div className='font-semibold leading-tight'>About Company:</div>
             <div className='text-[12px] font-bold font-lex '>About us</div>
             <div className='flex h-fit w-full text-wrap text-start text-[10px] font-lex '>{job.jobDetailsFromCompany}</div>
-            <div className='absolute text-center z-10  flex flex-row   items-center  justify-center w-full h-[50px] bg-gradient-to-t from-white  to-transparent -bottom-2  text-blue-400 '>
-                <span className='flex hover:cursor-pointer font-lex h-fit w-fit  self-end text-blue-600 font-medium'>view job</span>
+            <div className='absolute text-center  z-20 flex flex-row   items-center  justify-center w-full h-[50px] bg-gradient-to-t from-white  to-transparent -bottom-2  text-blue-400 '>
+                <span className='flex hover:cursor-pointer font-lex h-fit w-fit   text-blue-600 font-medium'>view job</span>
                 </div>
         </div>
         {/* view job */}
