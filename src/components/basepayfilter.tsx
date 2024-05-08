@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
-// import './App.css'
 import React from 'react';
 import Chip from './chip';
  function BasePayFilter({onupdate}:{
@@ -16,16 +15,12 @@ import Chip from './chip';
     },[selectedChips])
 
     const [searchQuery, setSearchQuery] = useState("");
-  // const [category,setCategory]=useState<categ | null>(null);
   const [category,setCategory]=useState("");
   const [range,setRange]=useState<String[]>([
     '1','2','3','4','5','6','7','8','9','10'
   ]
   )
-  // let category='';
   const [list,setList]=useState(false);
-//   const [highlight,setHighlight]=useState(false);
-//   const [count,setCount] =useState(false);
   const handleChipSelect = (R:String) => {
     const updatedRange=range.filter((r)=> r!==R)
     setSelectedChips(R);
@@ -49,26 +44,18 @@ import Chip from './chip';
       <div className='flex w-fit   flex-row items-center justify-start max-w-full flex-wrap  h-fit gap-1  '>
       {selectedChips!==''? 
           <Chip 
-        //   key={index}
           chip={selectedChips} index={0} chipdelete={(chip:String)=>handleChipDelete(chip) }/>:''}
       <input
   placeholder='Minimum Base Pay'
   value={searchQuery}
   onChange={(e) => setSearchQuery(e.target.value)}
   onFocus={()=>setList(true)}
-  // onBlur={()=>setList(false)}
-  // onMouseLeave={()=>setList(false)}
   onKeyDown={(e) => {
     if (e.key == 'Backspace' && searchQuery == '' && selectedChips!==''  ) {
 
-    //   let  updatedroles=roles;
-    //   roles[category]=[...roles[category],selectedChips[selectedChips.length-1]]
-      // setUsers(updatedUsers);
-    //   setRoles(updatedroles)
     const updatedRange=[...range];
     updatedRange.push(selectedChips);
     setRange(updatedRange);
-    //   const updatedItems = selectedChips.filter((item, index) => index !== selectedChips.length - 1);
       setSelectedChips('');
     }
   }}
@@ -79,22 +66,11 @@ import Chip from './chip';
         list && (
           <div className={'absolute  z-10 -bottom-[300px] w-full max-h-[400px] min-h-[100px] min-w-[50px] mr-2  h-[300px] bg-white overflow-auto no-scrollbar shadow-md rounded-md ring-[1px] ring-[#8b8b8b]'}>
             <ul className='flex flex-col w-full h-fit p-2 gap-3 text-black font-bold  '>
-              {/* {
-               Object.keys(roles).filter((key)=>{
-                // console.log(key);
-                let res= roles[key].some((role: String | String[])=>role.includes(searchQuery))
-                // console.log(res);
-                return res;
-              }
-              ).map((cg,index)=>
-                {
 
-                   return ( */}
                 <div 
                 // key={index}
                 className='flex flex-col w-full items-start justify-center text-black text-bold'>
                   {/* header  */}
-                  {/* <span className='text-[16px] text-black font-bold'>{cg}</span> */}
                   {/* subsection */}
                   <ul className='flex flex-col w-full  items-start justify-center text-start gap-2 text-slate-400 '>
                     {range.filter((range:String)=>range.includes(searchQuery)).map((range:String,idx:number)=>(
@@ -104,7 +80,6 @@ import Chip from './chip';
                         
                         handleChipSelect(range);
                         setList(false);
-                        // setHighlight(false);
                       }}
                       className='flex w-full min-w-fit h-fit flex-row items-center bg-white rounded-md  hover:cursor-pointer justify-start  hover:bg-blue-300 '>
                        <span className='text-start text-[12px] tracking-widest text-black font-lex  font-light mx-2 mt-1 uppercase '>{range}L</span>
@@ -114,9 +89,6 @@ import Chip from './chip';
 
                   </ul>
                 </div>
-              {/* )}
-            )
-              } */}
             </ul>
           </div>
 

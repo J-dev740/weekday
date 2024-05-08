@@ -80,16 +80,12 @@ function App() {
     // console.log('here')
     if(inView && offset<=count+10){
       fetchData();
-      console.log('data',data);
       let nextoffset=offset+10;
-      console.log('nextoffset',nextoffset);
       setOffset(nextoffset);
     }
    if(offset>count) setLoaderActive(false);
   }, [inView,data]); // Empty dependency array to run only once on component mount
 useEffect(()=>{
-  // console.log(`------------------> filterupdated`)
-  // console.log('filterstate', filters);
 
   setOffset(0);
   setLoaderActive(true);
@@ -123,7 +119,6 @@ useEffect(()=>{
         else experience = false;
       } else if (job.minExp!==null && job.maxExp!==null) {
         experience = (filters.experience >= job.minExp && filters.experience <= job.maxExp);
-        // if(experience==true) console.log(filters.experience,job.minExp,job.maxExp)
       }
     }
 
