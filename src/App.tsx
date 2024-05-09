@@ -64,6 +64,7 @@ function App() {
       const result = await response.text();
       const {jdList:jd,totalCount}=JSON.parse(result);
       console.log('jd',jd)
+      // console.log('fetchdata',result)
       setCount(totalCount);
       const filteredData=jd.filter((job:IJob)=>shouldDisplay(job));
       setData([...data,...filteredData]);
@@ -83,7 +84,7 @@ function App() {
       let nextoffset=offset+10;
       setOffset(nextoffset);
     }
-   if(offset>count) setLoaderActive(false);
+   if(offset>count){ console.log("totalcount",count); setLoaderActive(false);}
   }, [inView,data]); // Empty dependency array to run only once on component mount
 useEffect(()=>{
 

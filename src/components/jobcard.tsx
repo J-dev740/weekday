@@ -45,7 +45,7 @@ function JobCard({job,index}:{
             </div>
             {/* headers */}
             <div className='flex flex-col gap-y-[2px] items-start justify-center gap-[1px]  text-[12px] text-black  '>
-                <span className='text-[#8b8b8b] font-lex  text-[13px] font-semibold text-wrap leading-tight tracking-widest  hover:cursor-pointer hover:underline hover:underline-offset-4 '> {job.companyName}</span>
+                <span className='text-[#8b8b8b] font-lex  text-[13px] font-semibold text-wrap leading-tight tracking-widest  hover:cursor-pointer hover:underline hover:underline-offset-4 '> <a href={job.jdLink.toString()} target='_blank' rel="noopener noreferrer"> {job.companyName}</a> </span>
                 <span className='text-black font-lext text-[14px] font-light text-wrap text-start leading-tight tracking-wide'>{job.jobRole}</span>
                 <span className='text-black font-bold font-lex  text-[10px]  mt-[2px] leading-tight text-start text-wrap'>{job.location} | {job.minExp!==null && job.maxExp!==null?`Exp ${job.minExp}-${job.maxExp} years`:(job.minExp!==null || job.maxExp!==null)?`Exp ${(job.minExp || job.maxExp)} years`:`Exp not specified `}</span>
             </div>
